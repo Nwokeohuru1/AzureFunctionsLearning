@@ -1,3 +1,4 @@
+using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,11 @@ var host = new HostBuilder()
         {
             var configuration = sp.GetRequiredService<IConfiguration>();
             return new ServiceBusClient(configuration["ServiceBus"]);
+        });
+        services.AddSingleton(sp =>
+        {
+            var configuration = sp.GetRequiredService<IConfiguration>();
+            return new EventHubProducerClient(configuration["EventHubConnection"], configuration["EventHubName"]);
         });
         services.AddScoped<IPaymentService, PaymentService>();
         services.AddSingleton<RetryPolicyService>();
