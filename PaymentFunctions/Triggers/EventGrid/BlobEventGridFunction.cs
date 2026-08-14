@@ -19,7 +19,7 @@ namespace PaymentFunctions.Triggers.EventGrid
         public async Task Run([EventGridTrigger] EventGridEvent eventGridEvent)
         {
             _logger.LogInformation("============================================");
-            _logger.LogInformation("Event Grid event received");
+            _logger.LogInformation("Event Grid event received...........................................");
 
             _logger.LogInformation("Event Type: {EventType}", eventGridEvent.EventType);
 

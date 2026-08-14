@@ -37,8 +37,6 @@ namespace PaymentFunctions.Triggers.EventHub
                 _logger.LogInformation("Offset           : {Offset}", eventData.OffsetString);
                 _logger.LogInformation("Enqueued Time    : {EnqueuedTime}", eventData.EnqueuedTime);
                 _logger.LogInformation("Telemetry Event  : {Body}", body);
-
-
             }
 
             _logger.LogInformation("--------------------------------");

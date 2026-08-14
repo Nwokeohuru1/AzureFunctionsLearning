@@ -23,7 +23,7 @@ namespace PaymentFunctions.Triggers.EventHub
         public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req)
         {
             TelemetryRequest? request;
-            
+
             try
             {
                 request = await JsonSerializer.DeserializeAsync<TelemetryRequest>(req.Body, new JsonSerializerOptions
@@ -51,7 +51,7 @@ namespace PaymentFunctions.Triggers.EventHub
 
             var json = JsonSerializer.Serialize(telemetry);
 
-            using EventDataBatch batch = await _producer.CreateBatchAsync(new CreateBatchOptions { PartitionKey = request.DeviceId});
+            using EventDataBatch batch = await _producer.CreateBatchAsync(new CreateBatchOptions { PartitionKey = request.DeviceId });
 
             if (!batch.TryAdd(new EventData(json)))
             {
@@ -61,8 +61,10 @@ namespace PaymentFunctions.Triggers.EventHub
 
             await _producer.SendAsync(batch);
 
-            _logger.LogInformation("Telemetry sent to Event Hub. Device: {DeviceId}, Temperature: {Temperature}", telemetry.DeviceId, telemetry.Temperature);
-            
+            _logger.LogInformation(
+                ".................Telemetry sent via GitHub CI/CD. Device: {DeviceId}, Temperature: {Temperature}.............",
+                telemetry.DeviceId,
+                telemetry.Temperature);
             return new OkObjectResult(new
             {
                 message = "Telemetry event sent successfully.",
